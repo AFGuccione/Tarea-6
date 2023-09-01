@@ -1,0 +1,36 @@
+#static-html{
+    display: flex;
+    width:50%;
+}
+
+#static-html *{
+    margin: auto 10px;
+    padding: 5px;
+}
+
+#dinamic-html{
+    display: flex;
+    flex-direction: column;
+
+}
+
+#dinamic-html *{
+    margin: 2px 5px;
+}
+
+#hidden-buttons button{
+    margin:10px;
+}
+
+.show-buttons{
+    display:flex;
+    margin: 5px;
+}
+
+.oculto{
+    display: none;
+}
+
+.visible{
+	display: contents;
+}
