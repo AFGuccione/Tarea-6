@@ -8,17 +8,22 @@ Punto bonus: Crear un botón para "empezar de nuevo" que empiece el proceso nuev
  borrando los inputs ya creados (investigar cómo en MDN).
 */
 
-let nMembers = document.querySelector('#nMembers')
 let $executeButton = document.querySelector('#create-labels')
 let $dinamicHTML = document.querySelector('#dinamic-html')
 let $preCreatedHTML = document.querySelector('#pre-created-html')
 
 $executeButton.onclick = function(){
-    if(nMembers.value <= 0){
+    let cantidadIntegrantes = document.querySelector('#cantidad-integrantes').value
+    if(cantidadIntegrantes <= 0){
+        return
+    }
+    if($dinamicHTML.innerText !== ""){
         return
     }
 
-    for(i=1;i<=Number(nMembers.value);i++){
+    validarCantidadIntegrantes
+
+    for(i=1;i<=Number(cantidadIntegrantes);i++){
         createInputAndLabel(i)
     }
 
@@ -49,6 +54,8 @@ function createCalculateButton(){
         let membersAgeList = []
         for(i=0;i<arrMembers.length;i++){
             if(arrMembers[i].value === ""){continue}
+            validarEdad(arrMembers[i].value)
+            console.log(arrMembers[i].value)
             membersAgeList.push(Number(arrMembers[i].value))
         }
         if(membersAgeList.length !== 0){
@@ -70,8 +77,8 @@ function createClearButton(){
         while($dinamicHTML.childNodes[0] !== undefined){
             $dinamicHTML.removeChild($dinamicHTML.childNodes[0])
         }
-        hidePreCreatedHTML()
-        nMembers.value = "";
+        hidePreCreatedHTML();
+        document.querySelector('#cantidad-integrantes').value = "";
     }
 
     $dinamicHTML.appendChild(clearButton)
@@ -92,3 +99,42 @@ function showAverageAge(membersAgeList){
     $averageMember = document.querySelector('#promedio-edad')
     $averageMember.textContent = avg(membersAgeList)
 }
+
+/*
+function validarCantidadIntegrantes(cantidadIntegrantes){
+    if(cantidadIntegrantes < 0){
+        return "No se puede tener integrantes negativos"
+    }
+    if(cantidadIntegrantes === 0){
+        return "No se puede tener 0 integrantes"
+    }
+    if (!/^[0-9]\d*$/.test(cantidadIntegrantes)) {
+        return "Solo puede ingresarse números";
+      }
+      if(cantidadIntegrantes === ""){
+        return "El campo no puede estar vacio"
+    }
+    return ""
+}
+
+function validarEdad(edad) {
+    if (edad === "") {
+      return "El campo edad no debe estar vacío";
+    }
+  
+    if (edad < 0) {
+        console.log("asd")
+      return "La edad no puede contener numeros negativos";
+    }
+  
+    if (edad > 100) {
+      return "La edad no puede ser mayor a 100 años";
+    }
+  
+    if (/^[0-9]+$/.test(edad)) {
+      return "La edad solo debe llevar números enteros";
+    }
+    return "";
+  }
+  */
+ 
