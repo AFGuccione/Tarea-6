@@ -4,3 +4,12 @@
 
 .visible {
 	display: contents;
+}
+
+#dinamic-html *{
+    padding:2px;
+}
+
+.error{
+    border: red 2px dotted;
+}
