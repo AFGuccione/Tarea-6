@@ -70,25 +70,39 @@ function checkearNodes(){
 }
 
 function calcularSalarios(){
-    let salarios = document.querySelectorAll(".salario-integrante")
-    let arrayOfSalaries = nodeToArrayValue(salarios)
+    let $salarios = $dinamicHTML.querySelectorAll("input")
+    let arraySalario = []
+    let errores = []
+    $salarios.forEach($salario => {
+        arraySalario.push(Number($salario.value))
+        let error = validarSalario(Number($salario.value))
+        if(error !== ""){
+            $salario.className = "error"
+            errores.push(error)
+        }else{
+            $salario.classList.remove("error")
+        }
+    });
+    if(errores.length>0){
+        ocultarPreCreatedHTML()
+    }else{
+        let $mayorSalario = document.querySelector("#mayor-salario");
+        let $menorSalario = document.querySelector("#menor-salario");
+        let $promedioSalarioAnual = document.querySelector("#salario-anual-promedio");
+        let $promedioSalarioMensual = document.querySelector("#salario-mensual-promedio");
 
-    let $mayorSalario = document.querySelector("#mayor-salario");
-    let $menorSalario = document.querySelector("#menor-salario");
-    let $promedioSalarioAnual = document.querySelector("#salario-anual-promedio");
-    let $promedioSalarioMensual = document.querySelector("#salario-mensual-promedio");
+        let mayorSalario = max(arraySalario)
+        let menorSalario = min(arraySalario)
+        let promedioSalarioAnual = avg(arraySalario)
+        let promedioSalarioMensual = (avg(arraySalario)/12).toFixed(2)
 
-    let mayorSalario = max(arrayOfSalaries)
-    let menorSalario = min(arrayOfSalaries)
-    let promedioSalarioAnual = avg(arrayOfSalaries)
-    let promedioSalarioMensual = (avg(arrayOfSalaries)/12).toFixed(2)
+        $mayorSalario.textContent = mayorSalario;
+        $menorSalario.textContent = menorSalario;
+        $promedioSalarioAnual.textContent = promedioSalarioAnual;
+        $promedioSalarioMensual.textContent = promedioSalarioMensual;
 
-    $mayorSalario.textContent = mayorSalario;
-    $menorSalario.textContent = menorSalario;
-    $promedioSalarioAnual.textContent = promedioSalarioAnual;
-    $promedioSalarioMensual.textContent = promedioSalarioMensual;
-
-    mostrarPreCreatedHTML()
+        mostrarPreCreatedHTML()
+    }
 }
 
 function mostrarPreCreatedHTML(){
@@ -100,7 +114,7 @@ function ocultarPreCreatedHTML(){
 }
 
 function limpiarCampos(){
-    let salarios = document.querySelectorAll(".salario-integrante")
+    let salarios = $dinamicHTML.querySelectorAll("input")
     salarios.forEach(salario => {
         salario.value = ""
     });
@@ -114,10 +128,16 @@ function limpiarCampos(){
     */
 }
 
-function nodeToArrayValue(nodeList){
-    let array = [];
-    nodeList.forEach(node => {
-        array.push(Number(node.value))
-    });
-    return array
+function validarSalario(salario){
+    if(salario < 0){
+        return "No puede ser menor a 0"
+    }
+    if(salario === 0){
+        return "No puede ser 0"
+    }
+    if(!/^(0|([1-9]\d*))$/.test(salario)){
+        return "Solo puede tener números"
+    }
+
+    return ""
 }
