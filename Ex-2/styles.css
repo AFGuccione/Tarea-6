@@ -34,3 +34,7 @@
 .visible{
 	display: contents;
 }
+
+.error{
+    border: 2px dotted red;
+}
