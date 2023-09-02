@@ -130,13 +130,16 @@ function limpiarCampos(){
 
 function validarSalario(salario){
     if(salario < 0){
-        return "No puede ser menor a 0"
+        return "El salario no puede ser negativo"
     }
     if(salario === 0){
-        return "No puede ser 0"
+        return "El salario no puede ser 0"
+    }
+    if(salario.length === 0){
+        return "El salario no puede estar vacio"
     }
     if(!/^(0|([1-9]\d*))$/.test(salario)){
-        return "Solo puede tener números"
+        return "El salario solo puede ser expresado en números"
     }
 
     return ""
